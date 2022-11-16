@@ -1,7 +1,47 @@
 from sly import Lexer
 
-class KLexer(Lexer):
+### LEXER ###
+
+"""
+
+    Lexer that identifies keywords and turns them into tokens with help of the SLY library
+
+
+    ---
+
+    Attributes
+
+    tokens : 
+        array of defined tokens
+
+    ignore :
+        ignore other characters that are not defined
+
+    literals :
+        identify single characters that are returned as they come
+
+    ---
+
+    Methods
+
+    t_FLOAT(t)
+        Returns a token of type FLOAT with a float value
+
+    t_INT(t)
+        Returns a token of type INT with a int value
     
+    t_COMMENT()
+        Ignores lines that start with "//"
+
+    t_space()
+        Ignores spaces
+
+    t_newline(t)
+        Updates the lineno attribute of the token
+"""
+
+class KLexer(Lexer):
+
     tokens = {
         'PROG',
         'MAIN',
@@ -11,7 +51,6 @@ class KLexer(Lexer):
         'INT',
         'FLOAT',
         'STRING',
-        'BOOL',
         'TRUE',
         'FALSE',
         'D_INT',
@@ -19,12 +58,8 @@ class KLexer(Lexer):
         'D_STRING',
         'D_BOOL',
         'IF',                 # if
-        'THEN',               # then
         'ELSE',               # else
-        'FOR',                # for
-        'TO',                 # to
         'WHILE',              # while
-        'ARROW',              # arrow
         'COMMENT',            # //
         'EQEQ',               # ==
         'GOETHAN',          # >=          
@@ -32,7 +67,10 @@ class KLexer(Lexer):
         'DIFF',             # !=
         'AND',              # &&
         'OR',                # ||
-        'RETURN'
+        'RETURN',
+        'OUTPUT',
+        'INPUT',
+        'VOID'
     }
 
     reserved = {
@@ -44,12 +82,13 @@ class KLexer(Lexer):
         'function'      : 'FUNC',
         'return'        : 'RETURN',
         'input'         : 'INPUT',
-        'print'        : 'OUTPUT',
+        'output'        : 'OUTPUT',
         'int'           : 'INT',
         'float'         : 'FLOAT',
         'string'        : 'STRING',
         'bool'          : 'BOOL',
-        'while'         : 'WHILE'
+        'while'         : 'WHILE',
+        'void'          : 'VOID'
     }
 
     ignore = '\t'
@@ -72,22 +111,23 @@ class KLexer(Lexer):
         '[',
         ']',
         '{',
-        '}'
+        '}',
+        '<',
+        '>'
         }
 
-    # Define keywords that will be used in the language
-
+    # Define keywords
     PROG = r'program'
     MAIN = r'main'
     VAR = r'var'
     FUNC = r'function'
     IF = r'if'
-    THEN = r'then'
     ELSE = r'else'
-    FOR = r'for'
-    TO = r'to'
     WHILE = r'while'
-    ARROW = r'->'
+    OUTPUT = r'output'
+    INPUT = r'input'
+    VOID = r'void'
+
 
     EQEQ = r'=='
     GOETHAN = r'>='
@@ -111,8 +151,8 @@ class KLexer(Lexer):
         t.value = str(t.value)
         return t
 
-    @_(r'bool')
-    def BOOL(self, t):
+    @_(r'boolean')
+    def D_BOOL(self, t):
         t.value = str(t.value)
         return t
 

@@ -1,27 +1,26 @@
 class Borderland:
  
-    # Number of spaces available for each delimitation
     area = 100
 
     # Dictionary that calculates the amount of space for each type within a certain scope
 
     territories = {
-        # Int
+        # Integers
         "global_int": 0 * area,
         "local_int": 4 * area,
         "constant_int": 8 * area,
         
-        # Float
+        # Floats
         "global_float": 1 * area,
         "local_float": 5 * area, 
         "constant_float": 9 * area,
 
-        # String
+        # Strings
         "global_string": 2 * area,
         "local_string": 6 * area,
         "constant_string": 10 * area,
 
-        # Boolean
+        # Booleans
         "global_boolean": 3 * area,
         "local_boolean": 7 * area,
         "constant_boolean": 11 * area

@@ -1,0 +1,45 @@
+program alpha;
+var float globala, globalb, globalc;
+var int w, x, y, z;
+
+int function volta(fifa: int, ea: int, ball: int)
+{
+	var int iX, iY;
+
+	iX = 3 + 5 + ea;
+	return iX;
+}
+
+function main()
+{
+	// This is a comment. 
+	var int iA, iB, iC, iD, iE[3], iF;
+	var boolean bt;
+	iB = 2;
+	iC = 3;
+
+	output("Hello world", iB, 23);
+	iA = 1 + 6 + 3;
+	iA = 3.5;
+	iD = volta(iA, iB, iC);
+
+	output(iA);
+
+	output(iD);
+
+	input(iA);
+	output(iA);
+	iA = 0;
+	while (iA < 3)
+	{
+		output(iA);
+
+		if (iA == 2)
+		{
+			output(iA, "Hello", iC);
+		}
+
+		iA = iA + 1;
+	}
+
+}
