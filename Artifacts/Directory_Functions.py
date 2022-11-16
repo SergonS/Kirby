@@ -1,3 +1,4 @@
+from Artifacts.Directory_Variables import Directory_Vars
 from Artifacts.Functions import Function
 
 class Directory_Func:

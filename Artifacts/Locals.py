@@ -1,5 +1,4 @@
 from VM.Borderlands import Borderland
-
 class L_Table:
     delimitation = Borderland().area
 
@@ -15,9 +14,6 @@ class L_Table:
             return True
         else:
             return False
-
-    def addIntArray(self, value: str, addr):
-        self.l_integers[value] = addr
 
     def getInteger(self, value: str) -> int:
         return self.l_integers[value]

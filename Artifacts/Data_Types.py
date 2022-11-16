@@ -5,7 +5,7 @@ class Data_Type(Enum):
     INT = "int"
     FLOAT = "float"
     STRING = "string"
-    BOOLEAN = "bool"
+    BOOLEAN = "boolean"
     INVALID = "invalid"
 
 def strToType(type: str) -> Data_Type:
@@ -13,10 +13,10 @@ def strToType(type: str) -> Data_Type:
         return Data_Type.INT
     elif (type == Data_Type.FLOAT):
         return Data_Type.FLOAT
-    elif (type == Data_Type.STRING):
-        return Data_Type.STRING
-    elif (type == Data_Type.BOOLEAN):
-        return Data_Type.BOOLEAN
+    elif (type == Data_Type.FLOAT):
+        return Data_Type.FLOAT
+    elif (type == Data_Type.FLOAT):
+        return Data_Type.FLOAT
     else: 
         return Data_Type.INVALID
     
