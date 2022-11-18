@@ -2,12 +2,14 @@ from enum import Enum
 
 class Data_Type(Enum):
 
+    # Datatypes accepted
     INT = "int"
     FLOAT = "float"
     STRING = "string"
     BOOLEAN = "boolean"
     INVALID = "invalid"
 
+# Get a string and returning it to a datatype
 def strToType(type: str) -> Data_Type:
     if (type == Data_Type.INT):
         return Data_Type.INT

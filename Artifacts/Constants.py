@@ -1,13 +1,18 @@
 from VM.Borderlands import Borderland
 
+# Table that stores constants
 class C_Table:
+
+    # Using Borderlands to get the size of the 
     delimitation = Borderland().area
 
+    # Dictionaries for each kind of datatype
     c_integers = {}
     c_floats = {}
     c_strings = {}
     c_booleans = {}
 
+    # Simple Setters and Getters for each datatype
 
     def addInteger(self, value: str, addr: int) -> bool:
         if value not in self.c_integers:
@@ -49,6 +54,7 @@ class C_Table:
     def getBoolean(self, value: str) -> int:
         return self.c_booleans[value]
 
+    # Return table of constants
     def getCTable(self) -> dict:
         table = {
             "integer": self.c_integers,
@@ -58,6 +64,7 @@ class C_Table:
         }
         return table
 
+    # Print table just for debugging
     def printCTable(self):
         print("Integers:")
         print(self.c_integers)
