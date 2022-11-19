@@ -27,7 +27,6 @@ class QuadOverseer:
         self.operator_stack = []
         self.polish_vector = []
         self.counter_temps = 0
-
         
         # Generate GOTO to start in main
         self.addQuad("goto", (), (), ())
@@ -192,7 +191,13 @@ class QuadOverseer:
             #print("OPERATOR FOUND IS OUTPUT")
             self.unloadPolishVector()
         # Append operator
-        if (operator != ')' and operator != '=' and operator != 'return' and operator != 'endfunc' and operator != 'era' and operator != '(' and operator != 'params' and operator != 'gosub' and operator != 'assignr' and operator != 'output' and operator != 'input' and operator != 'gotof' and operator != 'gotow' and operator != 'end' and operator != 'goto'):
+        if (operator != ')' and operator != '=' 
+        and operator != 'return' and operator != 'endfunc' 
+        and operator != 'era' and operator != '(' and operator != 'params' 
+        and operator != 'gosub' and operator != 'assignr' 
+        and operator != 'output' and operator != 'input' 
+        and operator != 'gotof' and operator != 'gotow' 
+        and operator != 'end' and operator != 'goto'):
             self.operator_stack.append(operator)
             op = self.popOperatorS()
             operandB = self.popOperandS()

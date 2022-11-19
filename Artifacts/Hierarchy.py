@@ -1,5 +1,6 @@
 import enum
 
+# Enumeration to keep track of the hierarchy of operations
 class Hierarchy(enum.IntEnum):
     MULT_DIV = 1
     SUM_SUB = 2
@@ -24,6 +25,7 @@ class Hierarchy(enum.IntEnum):
     ARR_SDS = 21
     END = 22
 
+# Each operation gets a number for easier recognition for the VM
 class OpID():
     IDOperators = {
         "*": 1,

@@ -1,12 +1,18 @@
 from VM.Borderlands import Borderland
+
+# Table that stores locals
 class L_Table:
+
+    # Using Borderlands to get the size of each datatype
     delimitation = Borderland().area
 
+    # Dictionaries for each kind of datatype
     l_integers = {}
     l_floats = {}
     l_strings = {}
     l_booleans = {}
 
+    # Dictionaries for each kind of datatype
 
     def addInteger(self, value: str, addr: int) -> bool:
         if value not in self.l_integers:
@@ -48,6 +54,7 @@ class L_Table:
     def getBoolean(self, value: str) -> int:
         return self.l_booleans[value]
 
+    # Return table of locals
     def getLTable(self) -> dict:
         table = {
             "integer": self.l_integers,
@@ -57,6 +64,7 @@ class L_Table:
         }
         return table
 
+    # Print table just for debugging
     def printLTable(self):
         print("Integers:")
         print(self.l_integers)

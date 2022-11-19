@@ -3,7 +3,7 @@ from VM.Borderlands import Borderland
 # Table that stores constants
 class C_Table:
 
-    # Using Borderlands to get the size of the 
+    # Using Borderlands to get the size of each datatype
     delimitation = Borderland().area
 
     # Dictionaries for each kind of datatype
@@ -12,7 +12,7 @@ class C_Table:
     c_strings = {}
     c_booleans = {}
 
-    # Simple Setters and Getters for each datatype
+    # Dictionaries for each kind of datatype
 
     def addInteger(self, value: str, addr: int) -> bool:
         if value not in self.c_integers:
