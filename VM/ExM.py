@@ -10,6 +10,15 @@ class ExMemory:
     # Store additional memory for functions
     extra_memory = []
 
+    # Save extra local memory
+    elocal_memory = {
+        address["local_int"]: [],
+        address["local_float"]: [],
+        address["local_string"]: [],
+        address["local_boolean"]: []
+    }
+
+    # Main Memory
     memory = {
         "global": {
             address["global_int"]: [],
@@ -95,6 +104,10 @@ class ExMemory:
         self.storeConstValue("constant_float", constants["float"])
         self.storeConstValue("constant_string", constants["string"])
         self.storeConstValue("constant_boolean", constants["boolean"])
+
+    # Allocate space for new local memory before actually using it
+    #def allocateLocalMemory(self, locals: dict):
+     #   self.elocal_memory[locals[]]
 
     # Initialize local memory with the memory needed
     def initializeLocalMemory(self, locals: dict, temps: int):
