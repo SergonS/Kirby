@@ -7,8 +7,9 @@ import sys
 class ExMemory:
     address = Borderland().territories
     area = Borderland().area
-    # Store additional memory for functions
-    extra_memory = []
+
+    # Store local memory from different functions
+    stashed_memory = []
 
     # Save extra local memory
     elocal_memory = {
@@ -173,3 +174,33 @@ class ExMemory:
             pos = addr - self.address["local_" + data_type]
             pos = self.convertToType("int", pos)           
             self.memory["local"][self.address["local_" + data_type]][pos] = value
+
+    # Reserve extra memory to be used 
+    def reserveEMemory(self, nVars):
+        self.elocal_memory[self.address["local_int"]] = [None] * nVars["int"]
+        self.elocal_memory[self.address["local_float"]] = [None] * nVars["float"]
+        self.elocal_memory[self.address["local_string"]] = [None] * nVars["string"]
+        self.elocal_memory[self.address["local_boolean"]] = [None] * nVars["boolean"]
+
+    # Copies the extra memory to our local memory
+    def copyLMemory(self):
+        self.memory["local"] = self.elocal_memory.copy()
+
+    # Return the current local memory
+    def getLMemory(self):
+        return self.memory["local"]
+
+    # Saves the current state of memory and ip
+    def saveState(self, instructionPointer: int):
+        state = {
+            "memory": self.getLMemory().copy(),
+            "ip": instructionPointer
+        }
+        self.stashed_memory.append(state)
+
+    # Restores a previous stashed local memory and discards it from the stack
+    def restoreState(self) -> int:
+        previous_state = self.stashed_memory[-1]
+        self.memory["local"] = previous_state["memory"]
+        self.stashed_memory.pop()
+        return previous_state["ip"]
