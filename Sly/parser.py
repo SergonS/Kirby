@@ -48,6 +48,7 @@ class KParser(Parser):
     delimitation = Borderland()
     dir_functions = Directory_Func()
     dir_vars = Directory_Vars()
+    local_functions = []
 
     def __init__(self):
         self.scope = "global"
@@ -57,16 +58,18 @@ class KParser(Parser):
 
     @_('PROG ID check_program ";" gvars store_gvars functions gvars store_gvars main')
     def program(self, x):
-        
+        """
         print("VARIABLES DIR:")
         self.dir_vars.showDirectory()
         print()
         """
+        print(f'We have {len(self.dir_functions.getDirectory())} functions')
         print("FUNCTIONS DIR:")
         self.dir_functions.showDirectory()
         print()
         print(self.quads.polish_vector)
-        """
+        
+        
         self.quads.addQuad("end", (), (), ())
         pass
 
@@ -75,7 +78,8 @@ class KParser(Parser):
             "Globals": self.globals.getGTable(),
             "Constants": self.constants.getCTable(),
             "Locals": self.locals.getLTable(),
-            "Quadruples": self.quads.getQuads()
+            "Quadruples": self.quads.getQuads(),
+            "Functions": self.local_functions
         }
         return data
 
@@ -768,7 +772,7 @@ class KParser(Parser):
         dt = "none"
         dim = 0
         spaces = 0
-        print(self.stack_vars)
+        #print(self.stack_vars)
         for var in reversed(self.stack_vars):
             if var == "int" or var == "float" or var == "string" or var == "boolean":
                 dt = var
@@ -818,7 +822,19 @@ class KParser(Parser):
                 while i < spaces:
                     self.delimitation.updateCounter("local_int")
                     i = i + 1   
-                print(f'Found an array with {dim} dimensions and {spaces} spaces')
+                #print(f'Found an array with {dim} dimensions and {spaces} spaces')
+        scopeLCounter = self.delimitation.getLVarsCounter()
+        self.dir_functions.getFunc(scope).setNDTypes(scopeLCounter["int"], scopeLCounter["float"], scopeLCounter["string"], scopeLCounter["boolean"])
+        
+        temp_func = {
+            "scope": scope,
+            "local_int": scopeLCounter["int"],
+            "local_float": scopeLCounter["float"],
+            "local_string": scopeLCounter["string"],
+            "local_boolean": scopeLCounter["boolean"]
+        }
+        self.local_functions.append(temp_func)
+        self.delimitation.resetLocalStorage()
         self.stack_vars.clear()
 
     def storeParams(self, funcName: str):
@@ -861,6 +877,7 @@ class KParser(Parser):
             #self.dir_functions.showDirectory()
             self.dir_vars.appendToDirectory(var, dt, addr, 0, 0, funcName)
             self.dir_functions.getFunc(funcName).addParam(newVar)
+        self.delimitation.resetLocalStorage() 
         self.stack_params.clear()
 
     def createFunction(self, funcName: str, data_type: str) -> Function:

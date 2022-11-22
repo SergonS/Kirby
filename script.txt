@@ -10,6 +10,14 @@ int function volta(fifa: int, ea: int, ball: int)
 	return iX;
 }
 
+int function valorant(spike: int, pearl: int)
+{
+	var int split, vandal;
+	var int prince;
+	split = 0;
+	return split;
+}
+
 function main()
 {
 	// This is a comment. 

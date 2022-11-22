@@ -1,6 +1,7 @@
 from asyncio import constants
 from Artifacts.Directory_Functions import Directory_Func
 from Artifacts.Directory_Variables import Directory_Vars
+from Artifacts.Functions import Function
 from VM.Borderlands import Borderland
 import sys
 
@@ -11,13 +12,11 @@ class ExMemory:
     # Store local memory from different functions
     stashed_memory = []
 
+    # Cache that stores local memory with a pointer
+    state_cache = []
+
     # Save extra local memory
-    elocal_memory = {
-        address["local_int"]: [],
-        address["local_float"]: [],
-        address["local_string"]: [],
-        address["local_boolean"]: []
-    }
+    elocal_memory = {}
 
     # Main Memory
     memory = {
@@ -111,15 +110,15 @@ class ExMemory:
     def initializeLocalMemory(self, locals: dict, temps: int):
         print(f'Locals: {locals["integer"]}')
         length = list(locals["integer"].items())
-        print(length[-1][1] - 400)
+        #print(length[-1][1] - 400)
         self.memory["local"][self.address["local_int"]] = [None] * (length[-1][1] - 400 + temps + 1)
         self.memory["local"][self.address["local_float"]] = [None] * (len(locals["float"]) + temps)
         self.memory["local"][self.address["local_string"]] = [None] * (len(locals["string"]) + temps)
         self.memory["local"][self.address["local_boolean"]] = [None] * (len(locals["boolean"]) + temps)
 
-        print(self.memory["local"][self.address["local_int"]])
+        #print(self.memory["local"][self.address["local_int"]])
 
-
+    # Print the current state of the memory
     def showMemory(self):
         print("Constant")
         print(self.memory["constant"])
@@ -176,11 +175,27 @@ class ExMemory:
             self.memory["local"][self.address["local_" + data_type]][pos] = value
 
     # Reserve extra memory to be used 
-    def reserveEMemory(self, nVars):
-        self.elocal_memory[self.address["local_int"]] = [None] * nVars["int"]
-        self.elocal_memory[self.address["local_float"]] = [None] * nVars["float"]
-        self.elocal_memory[self.address["local_string"]] = [None] * nVars["string"]
-        self.elocal_memory[self.address["local_boolean"]] = [None] * nVars["boolean"]
+    def reserveEMemory(self, functions: dict):
+        if functions is not None:
+            for func in functions:
+                print("Func:")
+                print(func)
+                print(func["local_int"])
+                temp = {}
+                temp[self.address["local_int"]] = [None] * func["local_int"]
+                temp[self.address["local_float"]] = [None] * func["local_float"]
+                temp[self.address["local_string"]] = [None] * func["local_string"]
+                temp[self.address["local_boolean"]] = [None] * func["local_boolean"]
+
+                data = {
+                    "scope": func["scope"],
+                    "local": temp.copy()
+                }
+
+                self.stashed_memory.append(data)
+
+    def printSMemory(self):
+        print(self.stashed_memory)
 
     # Copies the extra memory to our local memory
     def copyLMemory(self):
@@ -196,11 +211,23 @@ class ExMemory:
             "memory": self.getLMemory().copy(),
             "ip": instructionPointer
         }
-        self.stashed_memory.append(state)
+        self.state_cache.append(state)
 
     # Restores a previous stashed local memory and discards it from the stack
     def restoreState(self) -> int:
-        previous_state = self.stashed_memory[-1]
+        previous_state = self.state_cache[-1]
         self.memory["local"] = previous_state["memory"]
-        self.stashed_memory.pop()
+        self.state_cache.pop()
         return previous_state["ip"]
+
+    # Stash current local memory and send it to sleep
+    def stashMemory(self, scope: str):
+        data = {
+            "scope": scope,
+            "memory": self.getLMemory().copy()
+        }
+        self.stashed_memory.append(data)
+
+    # Print asleep memory
+    def printSMemory(self):
+        print(self.stashed_memory)

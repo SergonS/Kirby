@@ -18,6 +18,12 @@ class VirtualMachine:
         self.em.initializeGlobalMemory(data["Globals"])
         self.em.initializeConstMemory(data["Constants"])
         self.em.initializeLocalMemory(data["Locals"], temps)
+        print("number of functions:")
+        print(len(data["Functions"]))
+        print(data["Functions"])
+        self.em.reserveEMemory(data["Functions"])
+        print("This is the stashed memory")
+        self.em.printSMemory()
         self.quads = data["Quadruples"]
         self.ip = 1
         self.q_length = len(self.quads)

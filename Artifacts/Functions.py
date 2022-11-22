@@ -12,6 +12,14 @@ class Function:
     initQuad: int
     # Address where the function is located 
     addr: int
+    # N of local integers
+    nInt: int
+    # N of local floats
+    nFloat: int
+    # N of local strings
+    nString: int
+    # N of local booleans
+    nBoolean: int
 
     # Initialize a function 
     def __init__(self, name: str, data_type: str = "void"):
@@ -28,6 +36,10 @@ class Function:
             self.returnVar = True
 
         self.addr = 0
+        self.nInt = 0
+        self.nFloat = 0
+        self.nString = 0
+        self.nBoolean = 0
 
     # Add a variable object to the dictionary of parameters
     def addParam(self, var: Variable):
@@ -46,6 +58,16 @@ class Function:
     # Set the initial quad
     def addIQuad(self, quad: int):
         self.initQuad = quad
+
+    # Set the number of each variable
+    def setNDTypes(self, int, float, string, boolean):
+        self.nInt = int
+        self.nFloat = float
+        self.nString = string
+        self.nBoolean = boolean
+
+    def getNDTypes(self):
+        print(f'This function has {self.nInt} integers, {self.nFloat} floats, {self.nString} strings, {self.nBoolean} booleans')
         
     # Print the dictionary of parameters
     def showParams(self):
@@ -65,7 +87,7 @@ class Function:
 
     # Print a function in a legible way
     def __repr__(self) -> str:
-        return f'Function({self.name}, {self.data_type}, with {len(self.params)} args and {len(self.vars)} vars, starting at Quad #{self.initQuad})'
+        return f'Function({self.name}, {self.data_type}, with {len(self.params)} args and {len(self.vars)} vars, starting at Quad #{self.initQuad}, contains: {self.getNDTypes()})'
 
 
     

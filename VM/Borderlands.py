@@ -70,6 +70,13 @@ class Borderland:
         else:
             # QUIT PROGRAM DUE TO ERROR OFF MEMORY LIMITS
             pass
+
+    # Reset every local counter to 0
+    def resetLocalStorage(self):
+        self.counter["local_int"] = 0
+        self.counter["local_float"] = 0
+        self.counter["local_string"] = 0
+        self.counter["local_boolean"] = 0
     
     def getGVarsCounter(self) -> dict:
 
