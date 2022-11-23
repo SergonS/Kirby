@@ -7,7 +7,7 @@ if __name__ == '__main__':
         K_parser = KParser()
 
         # To read from file
-        f_name = "fibonacci.txt"
+        f_name = "script.txt"
         file = open(f_name, 'r') 
         f = file.read()
 

@@ -18,5 +18,9 @@ class Variable:
         self.spaces = spaces
         self.scope = scope
 
+    def setSpaces(self, spaces: int):
+        self.spaces = spaces
+        self.dimensions = 1
+
     def __repr__(self) -> str:
-        return f'Variable({self.name}, {self.scope}, {self.data_type}, {self.value}, {self.addr})'
+        return f'Variable({self.name}, {self.scope}, {self.data_type}, {self.value}, {self.addr}, {self.spaces})'

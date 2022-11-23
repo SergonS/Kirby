@@ -1,5 +1,6 @@
 program fibonacci;
-
+var int x;
+var int y;
 int function fibonacci(n: int)
 {
     var int a, b, c, i;

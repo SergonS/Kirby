@@ -17,7 +17,7 @@ function main()
 	var boolean bt;
 	iB = 2;
 	iC = 3;
-
+	iE[2] = 12;
 	output("Hello world", iB, 23);
 	iA = 1 + 6 + 3;
 	iA = 3.5;

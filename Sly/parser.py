@@ -57,11 +57,11 @@ class KParser(Parser):
 
     @_('PROG ID check_program ";" gvars store_gvars functions gvars store_gvars main')
     def program(self, x):
-        """
+        
         print("VARIABLES DIR:")
         self.dir_vars.showDirectory()
         print()
-        
+        """
         print("FUNCTIONS DIR:")
         self.dir_functions.showDirectory()
         print()
@@ -266,6 +266,11 @@ class KParser(Parser):
     def var_assign(self, x):
         self.storeOperation("=")
         pass
+
+    @_('idarray store_oper "=" expr ";"')
+    def var_assign(self, x):
+        self.storeOperation("=")
+        pass
     
     """
     @_('ID array store_oper "=" expr ";"')
@@ -451,11 +456,11 @@ class KParser(Parser):
     def element(self, x):
         pass
 
-    """
+    
     @_('idarray store_oper')
     def element(self, x):
         pass
-    """
+    
 
     # CONST
 
@@ -502,11 +507,20 @@ class KParser(Parser):
         pass
     
     # IDARRAY
-    """
-    @_('ID array')
+    
+    @_('ID store_oper "[" arexp "]"')
     def idarray(self, x):
+        var = self.dir_vars.getVar(x[0])
+        print(var)
+        self.quads.addOperand(var.spaces, "int")
+        self.quads.addOperator("ver")
+        self.quads.addOperand(var.addr, "int")
+        self.quads.addOperator("+")
         pass
-    """
+    
+    @_('')
+    def array(self, x):
+        pass
 
     """
     @_('')
@@ -821,6 +835,7 @@ class KParser(Parser):
         dim = 0
         spaces = 0
         #print(self.stack_vars)
+        isArray = False
         for var in reversed(self.stack_vars):
             if var == "int" or var == "float" or var == "string" or var == "boolean":
                 dt = var
@@ -858,19 +873,20 @@ class KParser(Parser):
                         self.dir_vars.appendToDirectory(var, dt, addr, 0, 0, scope)
                 newVar = Variable(var, dt, addr, 0, 0, scope)
                 self.dir_functions.getFunc(scope).addVar(newVar)
-
             if type(var) == tuple:
+                dir = self.dir_vars.getDirectory()
+                arr = list(dir)[-1]
                 if var[1] == 0:
                     dim = 1
                     spaces = var[0]
-                else:
-                    dim = 2
-                    spaces = var[0] * var[1]             
+                           
                 i = 0
                 while i < spaces:
                     self.delimitation.updateCounter("local_int")
                     i = i + 1   
-                print(f'Found an array with {dim} dimensions and {spaces} spaces')
+                print(f'Found an array with {dim} dimensions and {spaces} spaces {var}')
+                self.dir_vars.getVar(arr).setSpaces(spaces)
+
         self.stack_vars.clear()
 
     def storeParams(self, funcName: str):
