@@ -16,7 +16,12 @@ class ExMemory:
     state_cache = []
 
     # Save extra local memory
-    elocal_memory = {}
+    elocal_memory = {
+        address["local_int"]: [],
+        address["local_float"]: [],
+        address["local_string"]: [],
+        address["local_boolean"]: []
+    }
 
     # Main Memory
     memory = {
@@ -175,24 +180,21 @@ class ExMemory:
             self.memory["local"][self.address["local_" + data_type]][pos] = value
 
     # Reserve extra memory to be used 
-    def reserveEMemory(self, functions: dict):
-        if functions is not None:
-            for func in functions:
-                print("Func:")
-                print(func)
-                print(func["local_int"])
-                temp = {}
-                temp[self.address["local_int"]] = [None] * func["local_int"]
-                temp[self.address["local_float"]] = [None] * func["local_float"]
-                temp[self.address["local_string"]] = [None] * func["local_string"]
-                temp[self.address["local_boolean"]] = [None] * func["local_boolean"]
+    def reserveEMemory(self, functions: dict, name: str):
+        for func in functions:
+                if func['scope'] == name:
+                    self.elocal_memory[self.address["local_int"]] = [None] * (func["local_int"] + 10)
+                    self.elocal_memory[self.address["local_float"]] = [None] * (func["local_float"] + 10)
+                    self.elocal_memory[self.address["local_string"]] = [None] * (func["local_string"] + 10)
+                    self.elocal_memory[self.address["local_boolean"]] = [None] * (func["local_boolean"] + 10)
 
-                data = {
-                    "scope": func["scope"],
-                    "local": temp.copy()
-                }
+    # Passing parameters to new memory 
+    def passParamsToEM(self, addr: int, type: str, value):
+        value = self.convertToType(type, value)
 
-                self.stashed_memory.append(data)
+        if addr >= 4 * self.area and addr < 8 * self.area:
+            pos = addr - self.address["local_" + type]
+            self.elocal_memory[self.address["local_" + type]][pos] = value
 
     def printSMemory(self):
         print(self.stashed_memory)

@@ -11,6 +11,7 @@ class VirtualMachine:
 
     quads = []
     jumps = []
+    functions = {}
     ip: int
 
     def __init__(self, data: dict, temps: int):
@@ -18,10 +19,9 @@ class VirtualMachine:
         self.em.initializeGlobalMemory(data["Globals"])
         self.em.initializeConstMemory(data["Constants"])
         self.em.initializeLocalMemory(data["Locals"], temps)
-        print("number of functions:")
-        print(len(data["Functions"]))
-        print(data["Functions"])
-        self.em.reserveEMemory(data["Functions"])
+    
+        self.functions = data["Functions"]
+
         print("This is the stashed memory")
         self.em.printSMemory()
         self.quads = data["Quadruples"]
@@ -120,17 +120,25 @@ class VirtualMachine:
             self.ip = quad["t_memory"]
         # DOUBLE CHECK
         elif quad["operator"] == self.operators.getOpID("era"):
+            # We have already reserved the spaces we need
+            print("NAME OF FUNC")
+            print(quad["t_memory"])
+            self.em.reserveEMemory(self.functions, quad["t_memory"])
             self.nextInstruction()
         elif quad["operator"] == self.operators.getOpID("params"):
             pValue = self.em.getValue(quad["operandA"][0], quad["operandA"][1])
             self.em.saveValue(quad["t_memory"], quad["operandA"][1], pValue)
             self.nextInstruction()
+        # GOSUB
         elif quad["operator"] == self.operators.getOpID("gosub"):
+            self.em.saveState(self.ip)
+            self.em.copyLMemory()
             self.jumps.append(self.ip + 1)
             self.ip = quad["t_memory"]
+        # ENDFUNC
         elif quad["operator"] == self.operators.getOpID("endfunc"):
-            self.ip = self.jumps[-1]
-            self.jumps.pop()
+            self.ip = self.em.restoreState()
+            self.nextInstruction()
         elif quad["operator"] == self.operators.getOpID("return"):
             pValue = quad["operandA"]
             pValue = self.em.getValue(pValue[0], pValue[1])
