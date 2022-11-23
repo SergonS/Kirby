@@ -833,7 +833,10 @@ class KParser(Parser):
             "local_string": scopeLCounter["string"],
             "local_boolean": scopeLCounter["boolean"]
         }
+        print("TEMP FUNC")
+        print(temp_func)
         self.local_functions.append(temp_func)
+        self.locals.resetLocals()
         self.delimitation.resetLocalStorage()
         self.stack_vars.clear()
 
@@ -877,7 +880,7 @@ class KParser(Parser):
             #self.dir_functions.showDirectory()
             self.dir_vars.appendToDirectory(var, dt, addr, 0, 0, funcName)
             self.dir_functions.getFunc(funcName).addParam(newVar)
-        self.delimitation.resetLocalStorage() 
+        #self.delimitation.resetLocalStorage() 
         self.stack_params.clear()
 
     def createFunction(self, funcName: str, data_type: str) -> Function:

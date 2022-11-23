@@ -64,6 +64,13 @@ class L_Table:
         }
         return table
 
+    # Reset every local counter to 0
+    def resetLocals(self):
+        self.l_integers.clear()
+        self.l_floats.clear()
+        self.l_strings.clear()
+        self.l_booleans.clear()
+
     # Print table just for debugging
     def printLTable(self):
         print("Integers:")

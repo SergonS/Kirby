@@ -18,10 +18,9 @@ class VirtualMachine:
         # VERIFY AGAIN
         self.em.initializeGlobalMemory(data["Globals"])
         self.em.initializeConstMemory(data["Constants"])
-        self.em.initializeLocalMemory(data["Locals"], temps)
     
         self.functions = data["Functions"]
-
+        self.em.reserveEMemory(self.functions, "main")
         print("This is the stashed memory")
         self.em.printSMemory()
         self.quads = data["Quadruples"]
@@ -127,7 +126,8 @@ class VirtualMachine:
             self.nextInstruction()
         elif quad["operator"] == self.operators.getOpID("params"):
             pValue = self.em.getValue(quad["operandA"][0], quad["operandA"][1])
-            self.em.saveValue(quad["t_memory"], quad["operandA"][1], pValue)
+            self.em.passParamsToEM(quad["t_memory"], quad["operandA"][1], pValue)
+            #self.em.saveValue(quad["t_memory"], quad["operandA"][1], pValue)
             self.nextInstruction()
         # GOSUB
         elif quad["operator"] == self.operators.getOpID("gosub"):

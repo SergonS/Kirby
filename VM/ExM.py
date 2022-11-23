@@ -134,6 +134,9 @@ class ExMemory:
 
     # Retrieve a value within a given address
     def getValue(self, addr: int, data_type: str):
+        #print("Looking For:")
+        #print(addr)
+        #self.showMemory()
         # Global address
         if type(addr) == str:
             newAddr = addr[1:-1]
@@ -162,6 +165,11 @@ class ExMemory:
 
     # Save a value within a given address
     def saveValue(self, addr: int, data_type: str, value):
+        print("STORING VALUE: ")
+        print(value)
+        print("AT ADDRESS:")
+        print(addr)
+        self.showMemory()
         if type(addr) == str:
             newAddr = addr[1:-1]
             address = self.getValue(int(newAddr), data_type)
@@ -222,13 +230,6 @@ class ExMemory:
         self.state_cache.pop()
         return previous_state["ip"]
 
-    # Stash current local memory and send it to sleep
-    def stashMemory(self, scope: str):
-        data = {
-            "scope": scope,
-            "memory": self.getLMemory().copy()
-        }
-        self.stashed_memory.append(data)
 
     # Print asleep memory
     def printSMemory(self):
