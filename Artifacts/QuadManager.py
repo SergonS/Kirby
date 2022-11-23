@@ -197,7 +197,7 @@ class QuadOverseer:
         and operator != 'gosub' and operator != 'assignr' 
         and operator != 'output' and operator != 'input' 
         and operator != 'gotof' and operator != 'gotow' 
-        and operator != 'end' and operator != 'goto'):
+        and operator != 'end' and operator != 'goto') and operator != 'ver' and operator != 'arrbase':
             self.operator_stack.append(operator)
             op = self.popOperatorS()
             operandB = self.popOperandS()

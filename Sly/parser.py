@@ -57,11 +57,11 @@ class KParser(Parser):
 
     @_('PROG ID check_program ";" gvars store_gvars functions gvars store_gvars main')
     def program(self, x):
-        
+        """
         print("VARIABLES DIR:")
         self.dir_vars.showDirectory()
         print()
-        """
+        
         print("FUNCTIONS DIR:")
         self.dir_functions.showDirectory()
         print()
@@ -262,12 +262,28 @@ class KParser(Parser):
         pass
 
     # VAR ASSIGN
-    
     @_('ID store_oper "=" expr ";"')
     def var_assign(self, x):
         self.storeOperation("=")
         pass
     
+    """
+    @_('ID array store_oper "=" expr ";"')
+    def var_assign(self, x):
+        self.storeOperation("=")
+        pass
+
+    # ARRAY
+    @_('"[" arexp "]" store_argquad add_dirb')
+    def array(self, x):
+        pass
+
+    @_('')
+    def array(self, x):
+        pass
+
+    """
+
     @_('RETURN expr store_rquad')
     def returns(self, x):
         pass
@@ -434,7 +450,13 @@ class KParser(Parser):
     @_('callfunc store_oper')
     def element(self, x):
         pass
-    
+
+    """
+    @_('idarray store_oper')
+    def element(self, x):
+        pass
+    """
+
     # CONST
 
     @_('TRUE')
@@ -479,6 +501,12 @@ class KParser(Parser):
     def callfuncparx(self, x):
         pass
     
+    # IDARRAY
+    """
+    @_('ID array')
+    def idarray(self, x):
+        pass
+    """
 
     """
     @_('')
@@ -651,6 +679,30 @@ class KParser(Parser):
         pass
 
     @_('')
+    def store_argquad(self, x):
+        print("Array with name ")
+        name = x[-4]
+
+        if self.verifyVar(name):
+            var = self.dir_vars.getVar(name)
+            
+            if self.verifyFunc(x[-1]) == False:
+
+                if var.scope != self.scope and var.scope != "global":
+                    sys.exit(f'Trying to access variable {var.name} at function {self.scope} declared in another function.')
+                else:
+                    self.quads.addOperand(var.spaces, var.data_type)
+                    self.quads.addOperator("ver")
+        pass
+
+    @_('')
+    def add_dirb(self, x):
+        var = self.dir_vars.getVar(x[-5])
+        self.quads.addOperand(var.name, var.data_type)
+        self.quads.addOperator("arrbase")
+        pass
+
+    @_('')
     def close_func(self, x):
         pass
 
@@ -768,7 +820,7 @@ class KParser(Parser):
         dt = "none"
         dim = 0
         spaces = 0
-        print(self.stack_vars)
+        #print(self.stack_vars)
         for var in reversed(self.stack_vars):
             if var == "int" or var == "float" or var == "string" or var == "boolean":
                 dt = var

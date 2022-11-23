@@ -100,17 +100,19 @@ Rule 96    store_oper -> <empty>
 Rule 97    store_const -> <empty>
 Rule 98    unload_pv -> <empty>
 Rule 99    store_rquad -> <empty>
-Rule 100   close_func -> <empty>
-Rule 101   store_endif -> <empty>
-Rule 102   store_pquad -> <empty>
-Rule 103   ver_params -> <empty>
-Rule 104   verify_func -> <empty>
-Rule 105   add_fstack -> <empty>
-Rule 106   end_fstack -> <empty>
-Rule 107   store_gosub -> <empty>
-Rule 108   store_gotof -> <empty>
-Rule 109   store_jump -> <empty>
-Rule 110   end_loop -> <empty>
+Rule 100   store_argquad -> <empty>
+Rule 101   add_dirb -> <empty>
+Rule 102   close_func -> <empty>
+Rule 103   store_endif -> <empty>
+Rule 104   store_pquad -> <empty>
+Rule 105   ver_params -> <empty>
+Rule 106   verify_func -> <empty>
+Rule 107   add_fstack -> <empty>
+Rule 108   end_fstack -> <empty>
+Rule 109   store_gosub -> <empty>
+Rule 110   store_gotof -> <empty>
+Rule 111   store_jump -> <empty>
+Rule 112   end_loop -> <empty>
 
 Unused terminals:
 
@@ -166,6 +168,7 @@ error                :
 
 Nonterminals, with rules where they appear:
 
+add_dirb             : 
 add_fstack           : 78
 arexp                : 45 47
 arexpextra           : 56 59 60
@@ -201,6 +204,7 @@ params               : 17 21
 program              : 0
 returns              : 31
 statement            : 20 26 35 35 38 38 39 44
+store_argquad        : 
 store_const          : 70
 store_endif          : 38 39
 store_funcm          : 24
@@ -1042,8 +1046,8 @@ state 61
 state 62
 
     (44) loop -> WHILE . store_jump ( expr ) store_gotof { statement } end_loop
-    (109) store_jump -> .
-    (               reduce using rule 109 (store_jump -> .)
+    (111) store_jump -> .
+    (               reduce using rule 111 (store_jump -> .)
 
     store_jump                     shift and go to state 95
 
@@ -1059,7 +1063,7 @@ state 64
     (78) callfunc -> ID . verify_func add_fstack ( callfuncpar ver_params ) end_fstack store_gosub
     (72) compoundx -> ID . store_oper
     (96) store_oper -> .
-    (104) verify_func -> .
+    (106) verify_func -> .
     =               reduce using rule 96 (store_oper -> .)
     /               reduce using rule 96 (store_oper -> .)
     *               reduce using rule 96 (store_oper -> .)
@@ -1074,7 +1078,7 @@ state 64
     >               reduce using rule 96 (store_oper -> .)
     GOETHAN         reduce using rule 96 (store_oper -> .)
     ;               reduce using rule 96 (store_oper -> .)
-    (               reduce using rule 104 (verify_func -> .)
+    (               reduce using rule 106 (verify_func -> .)
 
     store_oper                     shift and go to state 97
     verify_func                    shift and go to state 98
@@ -1840,8 +1844,8 @@ state 97
 state 98
 
     (78) callfunc -> ID verify_func . add_fstack ( callfuncpar ver_params ) end_fstack store_gosub
-    (105) add_fstack -> .
-    (               reduce using rule 105 (add_fstack -> .)
+    (107) add_fstack -> .
+    (               reduce using rule 107 (add_fstack -> .)
 
     add_fstack                     shift and go to state 132
 
@@ -1936,9 +1940,9 @@ state 102
 
     (78) callfunc -> ID . verify_func add_fstack ( callfuncpar ver_params ) end_fstack store_gosub
     (72) compoundx -> ID . store_oper
-    (104) verify_func -> .
+    (106) verify_func -> .
     (96) store_oper -> .
-    (               reduce using rule 104 (verify_func -> .)
+    (               reduce using rule 106 (verify_func -> .)
     /               reduce using rule 96 (store_oper -> .)
     *               reduce using rule 96 (store_oper -> .)
     -               reduce using rule 96 (store_oper -> .)
@@ -2733,14 +2737,14 @@ state 144
 state 145
 
     (17) functions -> datatype FUNC ID ( params ) store_funcv store_params store_init_quad { vars store_local_vars funcontent } . close_func functions
-    (100) close_func -> .
-    VOID            reduce using rule 100 (close_func -> .)
-    D_BOOL          reduce using rule 100 (close_func -> .)
-    D_STRING        reduce using rule 100 (close_func -> .)
-    D_FLOAT         reduce using rule 100 (close_func -> .)
-    D_INT           reduce using rule 100 (close_func -> .)
-    VAR             reduce using rule 100 (close_func -> .)
-    FUNC            reduce using rule 100 (close_func -> .)
+    (102) close_func -> .
+    VOID            reduce using rule 102 (close_func -> .)
+    D_BOOL          reduce using rule 102 (close_func -> .)
+    D_STRING        reduce using rule 102 (close_func -> .)
+    D_FLOAT         reduce using rule 102 (close_func -> .)
+    D_INT           reduce using rule 102 (close_func -> .)
+    VAR             reduce using rule 102 (close_func -> .)
+    FUNC            reduce using rule 102 (close_func -> .)
 
     close_func                     shift and go to state 163
 
@@ -2981,8 +2985,8 @@ state 155
 
     (38) ifelse -> IF ( expr ) . store_gotof { statement } ELSE store_endif { statement }
     (39) ifelse -> IF ( expr ) . store_gotof { statement } store_endif
-    (108) store_gotof -> .
-    {               reduce using rule 108 (store_gotof -> .)
+    (110) store_gotof -> .
+    {               reduce using rule 110 (store_gotof -> .)
 
     store_gotof                    shift and go to state 172
 
@@ -3133,8 +3137,8 @@ state 164
 state 165
 
     (44) loop -> WHILE store_jump ( expr ) . store_gotof { statement } end_loop
-    (108) store_gotof -> .
-    {               reduce using rule 108 (store_gotof -> .)
+    (110) store_gotof -> .
+    {               reduce using rule 110 (store_gotof -> .)
 
     store_gotof                    shift and go to state 176
 
@@ -3165,17 +3169,17 @@ state 167
 state 168
 
     (78) callfunc -> ID verify_func add_fstack ( callfuncpar . ver_params ) end_fstack store_gosub
-    (103) ver_params -> .
-    )               reduce using rule 103 (ver_params -> .)
+    (105) ver_params -> .
+    )               reduce using rule 105 (ver_params -> .)
 
     ver_params                     shift and go to state 178
 
 state 169
 
     (80) callfuncpar -> expr . store_pquad callfuncparx
-    (102) store_pquad -> .
-    ,               reduce using rule 102 (store_pquad -> .)
-    )               reduce using rule 102 (store_pquad -> .)
+    (104) store_pquad -> .
+    ,               reduce using rule 104 (store_pquad -> .)
+    )               reduce using rule 104 (store_pquad -> .)
 
     store_pquad                    shift and go to state 179
 
@@ -3456,22 +3460,22 @@ state 184
 state 185
 
     (78) callfunc -> ID verify_func add_fstack ( callfuncpar ver_params ) . end_fstack store_gosub
-    (106) end_fstack -> .
-    /               reduce using rule 106 (end_fstack -> .)
-    *               reduce using rule 106 (end_fstack -> .)
-    -               reduce using rule 106 (end_fstack -> .)
-    +               reduce using rule 106 (end_fstack -> .)
-    OR              reduce using rule 106 (end_fstack -> .)
-    EQEQ            reduce using rule 106 (end_fstack -> .)
-    DIFF            reduce using rule 106 (end_fstack -> .)
-    AND             reduce using rule 106 (end_fstack -> .)
-    <               reduce using rule 106 (end_fstack -> .)
-    LOETHAN         reduce using rule 106 (end_fstack -> .)
-    >               reduce using rule 106 (end_fstack -> .)
-    GOETHAN         reduce using rule 106 (end_fstack -> .)
-    ;               reduce using rule 106 (end_fstack -> .)
-    )               reduce using rule 106 (end_fstack -> .)
-    ,               reduce using rule 106 (end_fstack -> .)
+    (108) end_fstack -> .
+    /               reduce using rule 108 (end_fstack -> .)
+    *               reduce using rule 108 (end_fstack -> .)
+    -               reduce using rule 108 (end_fstack -> .)
+    +               reduce using rule 108 (end_fstack -> .)
+    OR              reduce using rule 108 (end_fstack -> .)
+    EQEQ            reduce using rule 108 (end_fstack -> .)
+    DIFF            reduce using rule 108 (end_fstack -> .)
+    AND             reduce using rule 108 (end_fstack -> .)
+    <               reduce using rule 108 (end_fstack -> .)
+    LOETHAN         reduce using rule 108 (end_fstack -> .)
+    >               reduce using rule 108 (end_fstack -> .)
+    GOETHAN         reduce using rule 108 (end_fstack -> .)
+    ;               reduce using rule 108 (end_fstack -> .)
+    )               reduce using rule 108 (end_fstack -> .)
+    ,               reduce using rule 108 (end_fstack -> .)
 
     end_fstack                     shift and go to state 191
 
@@ -3699,22 +3703,22 @@ state 190
 state 191
 
     (78) callfunc -> ID verify_func add_fstack ( callfuncpar ver_params ) end_fstack . store_gosub
-    (107) store_gosub -> .
-    /               reduce using rule 107 (store_gosub -> .)
-    *               reduce using rule 107 (store_gosub -> .)
-    -               reduce using rule 107 (store_gosub -> .)
-    +               reduce using rule 107 (store_gosub -> .)
-    OR              reduce using rule 107 (store_gosub -> .)
-    EQEQ            reduce using rule 107 (store_gosub -> .)
-    DIFF            reduce using rule 107 (store_gosub -> .)
-    AND             reduce using rule 107 (store_gosub -> .)
-    <               reduce using rule 107 (store_gosub -> .)
-    LOETHAN         reduce using rule 107 (store_gosub -> .)
-    >               reduce using rule 107 (store_gosub -> .)
-    GOETHAN         reduce using rule 107 (store_gosub -> .)
-    ;               reduce using rule 107 (store_gosub -> .)
-    )               reduce using rule 107 (store_gosub -> .)
-    ,               reduce using rule 107 (store_gosub -> .)
+    (109) store_gosub -> .
+    /               reduce using rule 109 (store_gosub -> .)
+    *               reduce using rule 109 (store_gosub -> .)
+    -               reduce using rule 109 (store_gosub -> .)
+    +               reduce using rule 109 (store_gosub -> .)
+    OR              reduce using rule 109 (store_gosub -> .)
+    EQEQ            reduce using rule 109 (store_gosub -> .)
+    DIFF            reduce using rule 109 (store_gosub -> .)
+    AND             reduce using rule 109 (store_gosub -> .)
+    <               reduce using rule 109 (store_gosub -> .)
+    LOETHAN         reduce using rule 109 (store_gosub -> .)
+    >               reduce using rule 109 (store_gosub -> .)
+    GOETHAN         reduce using rule 109 (store_gosub -> .)
+    ;               reduce using rule 109 (store_gosub -> .)
+    )               reduce using rule 109 (store_gosub -> .)
+    ,               reduce using rule 109 (store_gosub -> .)
 
     store_gosub                    shift and go to state 196
 
@@ -3822,41 +3826,41 @@ state 194
 
     (38) ifelse -> IF ( expr ) store_gotof { statement } . ELSE store_endif { statement }
     (39) ifelse -> IF ( expr ) store_gotof { statement } . store_endif
-    (101) store_endif -> .
+    (103) store_endif -> .
     ELSE            shift and go to state 197
-    WHILE           reduce using rule 101 (store_endif -> .)
-    INPUT           reduce using rule 101 (store_endif -> .)
-    OUTPUT          reduce using rule 101 (store_endif -> .)
-    IF              reduce using rule 101 (store_endif -> .)
-    RETURN          reduce using rule 101 (store_endif -> .)
-    ID              reduce using rule 101 (store_endif -> .)
-    (               reduce using rule 101 (store_endif -> .)
-    STRING          reduce using rule 101 (store_endif -> .)
-    FLOAT           reduce using rule 101 (store_endif -> .)
-    INT             reduce using rule 101 (store_endif -> .)
-    FALSE           reduce using rule 101 (store_endif -> .)
-    TRUE            reduce using rule 101 (store_endif -> .)
-    }               reduce using rule 101 (store_endif -> .)
+    WHILE           reduce using rule 103 (store_endif -> .)
+    INPUT           reduce using rule 103 (store_endif -> .)
+    OUTPUT          reduce using rule 103 (store_endif -> .)
+    IF              reduce using rule 103 (store_endif -> .)
+    RETURN          reduce using rule 103 (store_endif -> .)
+    ID              reduce using rule 103 (store_endif -> .)
+    (               reduce using rule 103 (store_endif -> .)
+    STRING          reduce using rule 103 (store_endif -> .)
+    FLOAT           reduce using rule 103 (store_endif -> .)
+    INT             reduce using rule 103 (store_endif -> .)
+    FALSE           reduce using rule 103 (store_endif -> .)
+    TRUE            reduce using rule 103 (store_endif -> .)
+    }               reduce using rule 103 (store_endif -> .)
 
     store_endif                    shift and go to state 198
 
 state 195
 
     (44) loop -> WHILE store_jump ( expr ) store_gotof { statement } . end_loop
-    (110) end_loop -> .
-    WHILE           reduce using rule 110 (end_loop -> .)
-    INPUT           reduce using rule 110 (end_loop -> .)
-    OUTPUT          reduce using rule 110 (end_loop -> .)
-    IF              reduce using rule 110 (end_loop -> .)
-    RETURN          reduce using rule 110 (end_loop -> .)
-    ID              reduce using rule 110 (end_loop -> .)
-    (               reduce using rule 110 (end_loop -> .)
-    STRING          reduce using rule 110 (end_loop -> .)
-    FLOAT           reduce using rule 110 (end_loop -> .)
-    INT             reduce using rule 110 (end_loop -> .)
-    FALSE           reduce using rule 110 (end_loop -> .)
-    TRUE            reduce using rule 110 (end_loop -> .)
-    }               reduce using rule 110 (end_loop -> .)
+    (112) end_loop -> .
+    WHILE           reduce using rule 112 (end_loop -> .)
+    INPUT           reduce using rule 112 (end_loop -> .)
+    OUTPUT          reduce using rule 112 (end_loop -> .)
+    IF              reduce using rule 112 (end_loop -> .)
+    RETURN          reduce using rule 112 (end_loop -> .)
+    ID              reduce using rule 112 (end_loop -> .)
+    (               reduce using rule 112 (end_loop -> .)
+    STRING          reduce using rule 112 (end_loop -> .)
+    FLOAT           reduce using rule 112 (end_loop -> .)
+    INT             reduce using rule 112 (end_loop -> .)
+    FALSE           reduce using rule 112 (end_loop -> .)
+    TRUE            reduce using rule 112 (end_loop -> .)
+    }               reduce using rule 112 (end_loop -> .)
 
     end_loop                       shift and go to state 199
 
@@ -3883,8 +3887,8 @@ state 196
 state 197
 
     (38) ifelse -> IF ( expr ) store_gotof { statement } ELSE . store_endif { statement }
-    (101) store_endif -> .
-    {               reduce using rule 101 (store_endif -> .)
+    (103) store_endif -> .
+    {               reduce using rule 103 (store_endif -> .)
 
     store_endif                    shift and go to state 200
 

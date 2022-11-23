@@ -22,7 +22,6 @@ function main()
 	iA = 1 + 6 + 3;
 	iA = 3.5;
 	iD = volta(iA, iB, iC);
-
 	output(iA);
 
 	output(iD);
