@@ -524,6 +524,7 @@ class KParser(Parser):
         self.scope = "global"
         pass
 
+    # We store the initial quad of a function by getting the name and adding it to the directory
     @_('')
     def store_init_quad(self, x):
         self.dir_functions.getFunc(x[-6]).addIQuad(len(self.quads.getQuads()))
