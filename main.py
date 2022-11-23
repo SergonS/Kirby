@@ -15,7 +15,6 @@ if __name__ == '__main__':
         K_parser.quads.printQuads()
         print("Console output:")
         vm = VirtualMachine(K_parser.parseData(), K_parser.quads.counter_temps)
-        
 
 
         
