@@ -40,8 +40,8 @@ class VirtualMachine:
 
     def solveQuad(self, quad: dict):
         # Verify if operator is +, -, *, /, <, <=, >=, ==, !=, && or ||
-        #print("Solving quad:")
-        #print("#" + str(self.ip) + " " + str(quad))
+        print("Solving quad:")
+        print("#" + str(self.ip) + " " + str(quad))
         if quad["operator"] >= 1 and quad["operator"] <= 12:
             # Get operands and the address to store
             opA = quad["operandA"]
@@ -133,7 +133,7 @@ class VirtualMachine:
         elif quad["operator"] == self.operators.getOpID("gosub"):
             self.em.saveState(self.ip)
             self.em.copyLMemory()
-            self.jumps.append(self.ip + 1)
+            #self.jumps.append(self.ip + 1)
             self.ip = quad["t_memory"]
         # ENDFUNC
         elif quad["operator"] == self.operators.getOpID("endfunc"):
