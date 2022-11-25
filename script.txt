@@ -18,6 +18,10 @@ function main()
 	iB = 2;
 	iC = 3;
 	iE[2] = 12;
+	output("iE");
+	output(iE[0]);
+	output(iE[1]);
+	output(iE[2]);
 	output("Hello world", iB, 23);
 	iA = 1 + 6 + 3;
 	iA = 3.5;

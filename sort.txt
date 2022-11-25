@@ -1,0 +1,63 @@
+program find;
+
+function main()
+{
+    var int i;
+    var int num;
+    var int pos;
+    var int x, y, temp;
+
+    var int Array[10];
+    x = 0;
+    y = 0;
+    i = 0;
+    temp = 0;
+    pos = 0;
+
+    Array[0] = 75;
+    Array[1] = 14;
+    Array[2] = 867;
+    Array[3] = 69;
+    Array[4] = 64;
+    Array[5] = 92;
+    Array[6] = 1;
+    Array[7] = 8;
+    Array[8] = 200;
+    Array[9] = 23;
+
+
+    output("Your normal array is: ");
+
+    while (i < 10)
+    {
+        output(Array[i]);
+        i = i + 1;
+    }
+
+    output(" ");
+    
+    while (x < 10)
+    {
+        y = x + 1;
+        while (y < 10)
+        {
+            if (Array[x] > Array[y])
+            {
+                temp = Array[x];
+                Array[x] = Array[y];
+                Array[y] = temp;
+            }
+
+            y = y + 1;
+        }
+        x = x + 1;
+    }
+
+    output("Your sorted array is: ");
+    i = 0;
+    while (i < 10)
+    {
+        output(Array[i]);
+        i = i + 1;
+    }
+}

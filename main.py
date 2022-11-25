@@ -7,7 +7,7 @@ if __name__ == '__main__':
         K_parser = KParser()
 
         # To read from file
-        f_name = "script.txt"
+        f_name = "sort.txt"
         file = open(f_name, 'r') 
         f = file.read()
 
@@ -15,6 +15,6 @@ if __name__ == '__main__':
         K_parser.quads.printQuads()
         print("Console output:")
         vm = VirtualMachine(K_parser.parseData(), K_parser.quads.counter_temps)
-        vm.em.showMemory()
+        #vm.em.showMemory()
 
         

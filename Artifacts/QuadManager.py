@@ -119,10 +119,11 @@ class QuadOverseer:
             operand = self.popOperandS()
             self.addQuad(operator, operand, base, (None, base[1]))
         # Generate s1 * d2 quad
-        elif self.operators[operator] == Hierarchy.ARR_SD:
-            d2 = self.popOperandS()
-            s1 = self.popOperandS()
-            self.addQuad(operator, s1, d2, (None, "int"))
+        elif self.operators[operator] == "_":
+            op = "_"
+            operandB = self.popOperandS()
+            operandA = self.popOperandS()
+            self.addQuad(operator, operandA, (), operandB)
         # Generate (s1 * d2) + s2 quad
         elif self.operators[operator] == Hierarchy.ARR_SDS:
             s1d2 = self.popOperandS()
@@ -331,7 +332,7 @@ class QuadOverseer:
             t_memory = t_memory[0]
 
         if op == "arrbase":
-            t_memory = ("(" + t_memory[0]) + ")", t_memory[1]
+            t_memory = ("(" + str(t_memory[0]) + ")", t_memory[1])
 
         self.quad_stack.append({
             "operator": self.op_id.getOpID(op),

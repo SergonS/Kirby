@@ -158,12 +158,14 @@ class VirtualMachine:
             self.em.saveValue(int(store[0]), store[1], addr)
             self.nextInstruction()
         elif quad["operator"] == self.operators.getOpID("arrsd"):
+            print("ARRSD")
             opA = quad["operandA"]
             opA = self.em.getValue(opA[0], opA[1])
             opB = quad["operandB"]
             opB = self.em.getValue(opB[0], opB[1])
             store = quad["t_memory"]
             ans = opA + opB
+            print(f'opA {opA}, opB {opB}, ans {ans}')
             self.em.saveValue(store[0], store[1], ans)
             self.nextInstruction()
         elif quad["operator"] == self.operators.getOpID("end"):

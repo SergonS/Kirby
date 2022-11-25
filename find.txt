@@ -1,0 +1,44 @@
+program find;
+
+function main()
+{
+    var int Array[10];
+    var int i;
+    var int num;
+    var int pos;
+    i = 0;
+    pos = 0;
+    Array[0] = 10;
+    Array[1] = 20;
+    Array[2] = 30;
+    Array[3] = 40;
+    Array[4] = 50;
+    Array[5] = 60;
+    Array[6] = 70;
+    Array[7] = 80;
+    Array[8] = 90;
+    Array[9] = 100;
+
+    output("What number are you looking for?");
+    input(num);
+
+    while (i < 10)
+    {
+        if (Array[i] == num)
+        {
+            pos = i;
+        }
+        i = i + 1;
+    }
+
+    if (pos > 0)
+    {
+        output("Your number is at position");
+        output(pos);
+        output("of the array.");
+    }
+    else
+    {
+        output("Your number is not in the array.");
+    }
+}

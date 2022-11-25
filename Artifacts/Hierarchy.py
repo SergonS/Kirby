@@ -94,8 +94,8 @@ class Operators():
         "gosub" : Hierarchy.GOSUB,
         "assignr" : Hierarchy.ASSIGN_R,
         "ver" : Hierarchy.VER,
-        "addbase" : Hierarchy.ARR_BASE,
-        "s1d2" : Hierarchy.ARR_SD,
+        "arrbase" : Hierarchy.ARR_BASE,
+        "arrsd" : Hierarchy.ARR_SD,
         "s1d2s2" : Hierarchy.ARR_SDS,
         "end" : Hierarchy.END
     }

@@ -113,7 +113,8 @@ class KLexer(Lexer):
         '{',
         '}',
         '<',
-        '>'
+        '>',
+        '_'
         }
 
     # Define keywords

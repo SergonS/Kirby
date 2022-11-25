@@ -155,6 +155,35 @@ class ExMemory:
         
         return var
 
+    # Check if theres a value in said address
+    def isValue(self, addr: int, data_type: str):
+        isThere = False
+        # Global address
+        if type(addr) == str:
+            newAddr = addr[1:-1]
+            address = self.getValue(int(newAddr), data_type)
+            return self.getValue(address, data_type)
+        elif addr >= 0 * self.area and addr < 4 * self.area:
+            pos = addr - self.address["global_" + data_type]
+            pos = self.convertToType("int", pos)
+            var = self.memory["global"][self.address["global_" + data_type]][pos]
+        # Local address
+        elif addr >= 4 * self.area and addr < 8 * self.area:
+            pos = addr - self.address["local_" + data_type]
+            pos = self.convertToType("int", pos)
+            var = self.memory["local"][self.address["local_" + data_type]][pos]
+        # Constant address
+        elif addr >= 8 * self.area and addr < 12 * self.area:
+            pos = addr - self.address["constant_" + data_type]
+            pos = self.convertToType("int", pos)
+            var = self.memory["constant"][self.address["constant_" + data_type]][pos]
+        
+        # Variable not found
+        if var == None:
+            return isThere
+        else:
+            return True
+
     # Save a value within a given address
     def saveValue(self, addr: int, data_type: str, value):
         if type(addr) == str:

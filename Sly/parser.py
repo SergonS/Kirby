@@ -90,6 +90,10 @@ class KParser(Parser):
         pass
 
     # GVARIDS
+    @_('')
+    def gvarids(self, x):
+        pass
+    
     @_('ID "," gvarids')
     def gvarids(self, x):
         self.stack_gvars.append(x[0])
@@ -122,6 +126,10 @@ class KParser(Parser):
         pass
 
     # VARIDS
+    @_('')
+    def varids(self, x):
+        pass
+
     @_('ID darray "," varids')
     def varids(self, x):
         self.stack_vars.append(x[0])
@@ -134,7 +142,6 @@ class KParser(Parser):
             matrix = [x[0]] * (self.stack_matrix[0] * self.stack_matrix[0])
             self.stack_vars.extend(matrix)
             self.stack_matrix.clear()
-
         pass
 
     @_('ID darray')
@@ -143,6 +150,7 @@ class KParser(Parser):
 
         if (len(self.stack_matrix) == 1):
             self.stack_vars.append((self.stack_matrix[0], 0))
+            #print(self.stack_vars)
             self.stack_matrix.clear()
         elif (len(self.stack_matrix) == 2):
             self.stack_vars.append((self.stack_matrix[1], self.stack_matrix[0]))
@@ -262,7 +270,24 @@ class KParser(Parser):
         pass
 
     # VAR ASSIGN
+
+
     @_('ID store_oper "=" expr ";"')
+    def var_assign(self, x):
+        self.storeOperation("=")
+        pass
+
+    @_('idarray store_oper "=" idarray store_oper ";"')
+    def var_assign(self, x):
+        self.storeOperation("=")
+        pass
+
+    @_('ID store_oper "=" idarray ";"')
+    def var_assign(self, x):
+        self.storeOperation("=")
+        pass
+
+    @_('idarray store_oper "=" ID store_oper ";"')
     def var_assign(self, x):
         self.storeOperation("=")
         pass
@@ -450,7 +475,7 @@ class KParser(Parser):
 
     @_('ID store_oper')
     def compoundx(self, x):
-        pass
+        return ('ID', x.ID)
     
     @_('callfunc store_oper')
     def element(self, x):
@@ -508,14 +533,17 @@ class KParser(Parser):
     
     # IDARRAY
     
-    @_('ID store_oper "[" arexp "]"')
+
+    @_('ID "[" add_fstack expr end_fstack "]"')
     def idarray(self, x):
+        #print("WHAT TYPE IS IT")
+        #print(x[3])
         var = self.dir_vars.getVar(x[0])
-        print(var)
         self.quads.addOperand(var.spaces, "int")
         self.quads.addOperator("ver")
+        #print(f'VAr addr = {var.addr}')
         self.quads.addOperand(var.addr, "int")
-        self.quads.addOperator("+")
+        self.quads.addOperator("arrbase")
         pass
     
     @_('')
@@ -831,12 +859,13 @@ class KParser(Parser):
         self.stack_gvars.clear
                     
     def storeLocalVars(self, scope: str):
+        print("SCOPE:")
         dt = "none"
         dim = 0
         spaces = 0
-        #print(self.stack_vars)
+        self.stack_vars.reverse()
         isArray = False
-        for var in reversed(self.stack_vars):
+        for var in self.stack_vars:
             if var == "int" or var == "float" or var == "string" or var == "boolean":
                 dt = var
             elif type(var) != tuple:
@@ -873,19 +902,24 @@ class KParser(Parser):
                         self.dir_vars.appendToDirectory(var, dt, addr, 0, 0, scope)
                 newVar = Variable(var, dt, addr, 0, 0, scope)
                 self.dir_functions.getFunc(scope).addVar(newVar)
-            if type(var) == tuple:
-                dir = self.dir_vars.getDirectory()
-                arr = list(dir)[-1]
-                if var[1] == 0:
-                    dim = 1
-                    spaces = var[0]
-                           
+            if isArray == True:
+                print(f'Found an array {var} with {dim} dimensions and {spaces} spaces ')
+                self.dir_vars.getVar(var).setSpaces(spaces)
                 i = 0
                 while i < spaces:
                     self.delimitation.updateCounter("local_int")
-                    i = i + 1   
-                print(f'Found an array with {dim} dimensions and {spaces} spaces {var}')
-                self.dir_vars.getVar(arr).setSpaces(spaces)
+                    i = i + 1
+                print(f'There are {i} spaces')
+                i = 0
+                dim = 0
+                spaces = 0
+                dim = 0
+                isArray = False
+            if type(var) == tuple:
+                isArray = True
+                if var[1] == 0:
+                    dim = 1
+                    spaces = var[0]
 
         self.stack_vars.clear()
 
