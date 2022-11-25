@@ -1,0 +1,16 @@
+program demo;
+
+int function pelos(a: int)
+{
+    return a * 2 + 2;
+}
+
+int function patito(x: int)
+{
+    return pelos(x * 2) + 3;
+}
+
+function main()
+{
+    output(patito(4));
+}

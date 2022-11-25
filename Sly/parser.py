@@ -722,7 +722,7 @@ class KParser(Parser):
 
     @_('')
     def store_argquad(self, x):
-        print("Array with name ")
+        #print("Array with name ")
         name = x[-4]
 
         if self.verifyVar(name):
@@ -859,11 +859,12 @@ class KParser(Parser):
         self.stack_gvars.clear
                     
     def storeLocalVars(self, scope: str):
-        print("SCOPE:")
+        #print("SCOPE:")
         dt = "none"
         dim = 0
         spaces = 0
         self.stack_vars.reverse()
+
         isArray = False
         for var in self.stack_vars:
             if var == "int" or var == "float" or var == "string" or var == "boolean":
@@ -903,13 +904,13 @@ class KParser(Parser):
                 newVar = Variable(var, dt, addr, 0, 0, scope)
                 self.dir_functions.getFunc(scope).addVar(newVar)
             if isArray == True:
-                print(f'Found an array {var} with {dim} dimensions and {spaces} spaces ')
+                #print(f'Found an array {var} with {dim} dimensions and {spaces} spaces ')
                 self.dir_vars.getVar(var).setSpaces(spaces)
                 i = 0
                 while i < spaces:
                     self.delimitation.updateCounter("local_int")
                     i = i + 1
-                print(f'There are {i} spaces')
+                #print(f'There are {i} spaces')
                 i = 0
                 dim = 0
                 spaces = 0

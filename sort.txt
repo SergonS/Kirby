@@ -16,13 +16,13 @@ function main()
 
     Array[0] = 75;
     Array[1] = 14;
-    Array[2] = 867;
+    Array[2] = 0;
     Array[3] = 69;
     Array[4] = 64;
-    Array[5] = 92;
+    Array[5] = 13;
     Array[6] = 1;
     Array[7] = 8;
-    Array[8] = 200;
+    Array[8] = 2;
     Array[9] = 23;
 
 

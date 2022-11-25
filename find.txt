@@ -2,10 +2,13 @@ program find;
 
 function main()
 {
-    var int Array[10];
+    
     var int i;
     var int num;
     var int pos;
+    var int Array[10];
+    var int B[4];
+    var int ds;
     i = 0;
     pos = 0;
     Array[0] = 10;
@@ -21,7 +24,7 @@ function main()
 
     output("What number are you looking for?");
     input(num);
-
+    i = 0;
     while (i < 10)
     {
         if (Array[i] == num)

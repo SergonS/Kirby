@@ -5,31 +5,15 @@ int function factorial(n: int)
 {
     var int fact;
     fact = 0;
-    if (n < 0)
-    {
-        fact = 0;
-    }
 
-    if (n == 0)
+    if (n < 2)
     {
-        fact = 1;
-    }
-
-    if (n == 1)
-    {
-        fact = 1;
+        return 1;
     }
     else
     {
-        fact = 1;
-
-        while (n > 1)
-        {
-            fact = fact * n;
-            n = n - 1;
-        }
+        return n * factorial(n - 1);
     }
-    return fact;
 }
 
 function main()

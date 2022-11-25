@@ -7,7 +7,7 @@ if __name__ == '__main__':
         K_parser = KParser()
 
         # To read from file
-        f_name = "sort.txt"
+        f_name = "find.txt"
         file = open(f_name, 'r') 
         f = file.read()
 
